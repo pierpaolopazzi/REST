@@ -4,17 +4,24 @@ import requests
 # RICHIEST GET #
 ################
 
+#api_url= "http://jsonplaceholder.typicode.com"
+api_url= "http://localhost:5000"
 my_headers = {"Content-type":"application/json"}
 
-res = requests.get("https://jsonplaceholder.typicode.com/todos", headers=my_headers)
+print("GET /todos")
+res = requests.get(f"{api_url}/todos", headers=my_headers)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
-res = requests.get("https://jsonplaceholder.typicode.com/todos/1", headers=my_headers)
+print("\n")
+print("GET /todos/1")
+res = requests.get(f"{api_url}/todos/1", headers=my_headers)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
-res = requests.get("https://jsonplaceholder.typicode.com/users/1", headers=my_headers)
+print("\n")
+print("GET /users/1")
+res = requests.get(f"{api_url}/users/1", headers=my_headers)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
@@ -22,15 +29,20 @@ print(f"Risposta:\n{res.json()}")
 # RICHIESTA POST #
 ##################
 
+print("\n")
+print("POST /todos")
 to_insert = {
     "userId": 3,
     "title": "Todo aggiunto #1",
     "completed": False
 }
-res = requests.post("https://jsonplaceholder.typicode.com/todos", headers=my_headers, json=to_insert)
+res = requests.post(f"{api_url}/todos", headers=my_headers, json=to_insert)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
+
+print("\n")
+print("POST /users")
 user_to_insert = {
     "name": "Giacomo Rossi",
     "username": "Il Giacomino",
@@ -50,7 +62,7 @@ user_to_insert = {
         "bs": "gotta catch 'em all"
     }
 }
-res = requests.post("https://jsonplaceholder.typicode.com/users", headers=my_headers, json=user_to_insert)
+res = requests.post(f"{api_url}/users", headers=my_headers, json=user_to_insert)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
@@ -58,16 +70,19 @@ print(f"Risposta:\n{res.json()}")
 # RICHIESTA PUT #
 #################
 
+print("\n")
+print("PUT /todos/1")
 to_put = {
     "userId": 499,
     "title": "Todo sostituito #1",
     "completed": False
 }
-res = requests.put("https://jsonplaceholder.typicode.com/todos/1", headers=my_headers, json=to_put)
+res = requests.put(f"{api_url}/todos/1", headers=my_headers, json=to_put)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
-
+print("\n")
+print("PUT /users/1")
 user_to_change = {
     "name": "Babbo Pasquale",
     "username": "Pasqualino",
@@ -87,7 +102,7 @@ user_to_change = {
         "bs": "gotta catch 'em all"
     }
 }
-res = requests.put("https://jsonplaceholder.typicode.com/users/1", headers=my_headers, json=user_to_change)
+res = requests.put(f"{api_url}/users/1", headers=my_headers, json=user_to_change)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
 
@@ -96,6 +111,8 @@ print(f"Risposta:\n{res.json()}")
 # RICHIESTA DELETE #
 ####################
 
-res = requests.delete("https://jsonplaceholder.typicode.com/todos/5", headers=my_headers)
+print("\n")
+print("DELETE /todos/5")
+res = requests.delete(f"{api_url}/todos/5", headers=my_headers)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
