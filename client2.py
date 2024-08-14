@@ -116,3 +116,28 @@ print("DELETE /todos/5")
 res = requests.delete(f"{api_url}/todos/5", headers=my_headers)
 print(f"Stato HTTP: {res.status_code}")
 print(f"Risposta:\n{res.json()}")
+
+
+###################
+# NUOVE RICHIESTE #
+###################
+
+# Recuperare i todos dell'utente con id 1
+print("\n")
+print("GET /users/1/todos")
+res = requests.get(f"{api_url}/users/1/todos", headers=my_headers)
+print(f"Stato HTTP: {res.status_code}")
+print(f"Risposta:\n{res.json()}")
+
+
+# Inserire un nuovo todo per l’utente 1
+print("\n")
+print("POST /users/1/todos")
+to_insert_new = {
+    "title": "Riordinare gli appunti",
+    "completed": True, 
+    "userId": 1
+}
+res = requests.post(f"{api_url}/users/1/todos", headers=my_headers, json=to_insert_new)
+print(f"Stato HTTP: {res.status_code}")
+print(f"Risposta dal Server:\n{res.json()}")

@@ -11,9 +11,16 @@ todos = [
 ]
 
 
-def _find_next_id(): 
+def _find_next_id():
     return max(todo["id"] for todo in todos) + 1
 
+def _find_next_todo_id(u_id):
+    # Filtro i todo per l'utente specificato
+    user_todos = [todo for todo in todos if todo["userId"]==u_id]
+    #if not user_todos:
+    #    return 1
+    # Trovo il massimo con la funzione max
+    return max(todo["id"] for todo in user_todos) + 1 
 
 def _find_todo_by_id(t_id):
     for todo in todos:
@@ -149,6 +156,13 @@ def _find_user_by_id(u_id):
             return user
     return None
 
+def _find_todos_by_user_id(u_id):
+    to_return = []
+    for todo in todos:
+        if todo["userId"] == u_id or todo["userId"] == int(u_id):
+            to_return.append(todo)
+    return to_return
+
 @app.before_request
 def check_cont_type_json():
     if not request.is_json:
@@ -193,6 +207,18 @@ def delete_user(u_id):
         return jsonify({"Message":"Not found"}), 404
     users.remove(to_return)
     return jsonify({"Message":"OK"}), 200
+
+# ------- /USERS/<id>/TODOS --------
+@app.get("/users/<u_id>/todos")
+def get_todos_by_user(u_id):
+        return jsonify(_find_todos_by_user_id(u_id)), 200
+    
+@app.post("/users/<u_id>/todos")
+def add_todo_to_user(u_id):
+    todo = request.json
+    todo["id"] = _find_next_todo_id(int(u_id))
+    todos.append(todo)
+    return todo, 201
 
 if __name__ == "__main__":
     app.run("localhost", port=5000, debug=True)
